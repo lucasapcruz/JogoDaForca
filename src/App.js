@@ -12,6 +12,7 @@ export default function App() {
     const [wordInput, setWordInput] = useState([])
     const [hangmanState, setHangmanState] = useState(0)
     const [hangmanImage, setHangmanImage] = useState("assets/forca0.png")
+    const [gameState, setGameState] = useState("playing")
 
 
     function comparator() {
@@ -57,6 +58,7 @@ export default function App() {
         let guessWordStr = updatedGuessWord.join("")
         if(isEqual(wordStr, guessWordStr)){
             setWordGuess(updatedGuessWord)
+            setGameState("won")
             console.log(wordStr)
             return true
         }
@@ -66,6 +68,7 @@ export default function App() {
     function checkDefeat(updatedHangmanState) {
         if(updatedHangmanState===6){
             setWordGuess(word)
+            setGameState("defeated")
         }
 
     }
@@ -79,7 +82,7 @@ export default function App() {
                 <div className="word-utilities">
                     <button data-identifier="choose-word" onClick={() => chooseWord()}>Escolher Palavra</button>
                     <div className="word">
-                        {wordGuess.map((character) => <span>{character}</span>)}
+                        {wordGuess.map((character) => <span className={gameState}>{character}</span>)}
                     </div>
                 </div>
             </div>

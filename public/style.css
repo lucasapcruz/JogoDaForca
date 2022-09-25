@@ -27,3 +27,20 @@ body {
   height: 40px;
   width: 40px;
 }
+
+.playing{
+  margin: 1px;
+  font-size: 20px;
+}
+
+.won{
+  margin: 1px;
+  font-size: 20px;
+  color:green;
+}
+
+.defeated{
+  margin: 1px;
+  font-size: 20px;
+  color:red;
+}
