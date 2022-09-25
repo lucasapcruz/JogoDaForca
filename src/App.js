@@ -9,7 +9,9 @@ export default function App() {
 
     const [word, setWord] = useState([])
     const [wordGuess, setWordGuess] = useState([])
+    const [wordInput, setWordInput] = useState([])
     const [hangmanState, setHangmanState] = useState(0)
+    const [hangmanImage, setHangmanImage] = useState("assets/forca0.png")
 
 
     function comparator() {
@@ -20,31 +22,49 @@ export default function App() {
         palavras.sort(comparator)
         setWord(palavras[0].split(""))
         let underscoreWord = "_".repeat(palavras[0].length)
+        console.log(palavras[0])
         setWordGuess(underscoreWord.split(""))
     }
 
     function guessCharacter(character) {
         if (word.includes(character)) {
-            const updatedGuessWord = word.map((c, index) => c===character?c:wordGuess[index])
+            const updatedGuessWord = word.map((c, index) => isEqual(c,character)?c:wordGuess[index])
             setWordGuess(updatedGuessWord)
+            checkWin(updatedGuessWord)
         } else {
-            setHangmanState(hangmanState + 1)
-            checkDefeat()
+            let updatedHangmanState = hangmanState + 1
+            setHangmanState(updatedHangmanState)
+            setHangmanImage(`assets/forca${updatedHangmanState}.png`)
+            checkDefeat(updatedHangmanState)
         }
 
     }
 
-    function guessWord(){  
-
-
+    function isEqual(str1, str2){
+        return str1.localeCompare(str2, undefined, {sensitivity:"base"})===0
     }
 
-    function checkWin() {
-
+    function guessWord(updatedGuessWord){
+        if(!checkWin(updatedGuessWord)){
+            setHangmanState(6)
+            checkDefeat(6)
+        }
+        
     }
 
-    function checkDefeat() {
-        if(hangmanState+1===6){
+    function checkWin(updatedGuessWord) {
+        let wordStr = word.join("")
+        let guessWordStr = updatedGuessWord.join("")
+        if(isEqual(wordStr, guessWordStr)){
+            setWordGuess(updatedGuessWord)
+            console.log(wordStr)
+            return true
+        }
+        return false
+    }
+
+    function checkDefeat(updatedHangmanState) {
+        if(updatedHangmanState===6){
             setWordGuess(word)
         }
 
@@ -54,7 +74,7 @@ export default function App() {
         <div className="content">
             <div className="container">
                 <div className="hangman">
-                    <img src="assets/forca0.png" data-identifier="game-image" />
+                    <img src={hangmanImage} data-identifier="game-image" />
                 </div>
                 <div className="word-utilities">
                     <button data-identifier="choose-word" onClick={() => chooseWord()}>Escolher Palavra</button>
@@ -68,8 +88,8 @@ export default function App() {
             </div>
             <div className="guess">
                 <label htmlFor="guess">Já sei a palavra</label>
-                <input type="text" name="guess" data-identifier="type-guess"></input>
-                <button data-identifier="guess-button">Chutar</button>
+                <input type="text" name="guess" data-identifier="type-guess" value={wordInput} onChange={(event)=>setWordInput(event.target.value)}></input>
+                <button data-identifier="guess-button" onClick={() => guessWord(wordInput.split(""))}>Chutar</button>
             </div>
         </div>
     )
