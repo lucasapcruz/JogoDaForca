@@ -8,6 +8,8 @@ export default function App(){
 
 
     const [word, setWord] = useState([])
+    const [wordGuess, setWordGuess] = useState([])
+    const [hangmanState, setHangmanState] = useState(0)
 
     
     function comparator() {
@@ -17,6 +19,25 @@ export default function App(){
     function chooseWord(){
         palavras.sort(comparator)
         setWord(palavras[0].split(""))
+        let underscoreWord = "_".repeat(palavras[0].length)
+        setWordGuess(underscoreWord.split(""))
+    }
+
+    function characterGuess(character){
+        if(word.includes(character)){
+
+        }else{
+            setHangmanState(hangmanState+1)
+        }
+
+    }
+
+    function checkWin(){
+
+    }
+
+    function checkDefeat(){
+
     }
 
     return(
@@ -28,12 +49,12 @@ export default function App(){
                 <div className="word-utilities">
                     <button data-identifier="choose-word" onClick={() => chooseWord()}>Escolher Palavra</button>
                     <div className="word">
-                        {word.map((character) => <span>{character}</span>)}
+                        {wordGuess.map((character) => <span>{character}</span>)}
                     </div>
                 </div>
             </div>
             <div className="keyboard">
-                {alphabet.map((letter) => <button className="letter" data-identifier="letter">{letter}</button>)}
+                {alphabet.map((letter) => <button className="letter" data-identifier="letter" onClick={(event) => characterGuess(event.target.textContent)}>{letter}</button>)}
             </div>
             <div className="guess">
                 <label htmlFor="guess">Já sei a palavra</label>
