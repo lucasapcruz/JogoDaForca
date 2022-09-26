@@ -8,39 +8,113 @@ body {
 
 .content{
   max-width: 1200px;
+  margin: 0 auto;
 }
 
 .container{
+  margin: 60px auto;
+  max-width: 700px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.keyboard{
-  width: 1200px;
+.word-utilities{
   display: flex;
+  flex-direction: column;
   justify-content:space-between;
+  height: inherit;
+}
+
+.word-utilities button{
+  cursor: pointer;
+  border: none;
+  height:50px;
+  width: 150px;
+  margin-bottom: 320px;
+  border-radius: 8px;
+  color: #FAFAFA;
+  background-color: #27ad60;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.word{
+  height: 40px;
+}
+
+.hangman img{
+  max-width: 400px;
+}
+
+.keyboard{
+  margin: 0 auto;
+  max-width: 624px;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
 .key {
+  cursor: pointer;
+  border: 1px solid #39739d;
+  margin:4px;
   height: 40px;
   width: 40px;
+  background-color: #e1ebf3;
+  color: #39739d;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.key:disabled{
+  background-color: #9faab5;
+  color: #79818a;
+}
+
+.guess{
+  max-width: 400px;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.guess button{
+  border: 1px solid #39739d;
+  cursor: pointer;
+  height: 30px;
+  width: 70px;
+  background-color: #e1ebf3;
+  color: #39739d;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.guess button:disabled{
+  background-color: #9faab5;
+  color: #79818a;
+}
+
+.guess label{
+  display: flex;
+  align-items: center;
 }
 
 .playing{
   margin: 1px;
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .won{
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   color:green;
 }
 
 .defeated{
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   color:red;
 }

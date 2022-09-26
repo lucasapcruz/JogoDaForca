@@ -104,7 +104,7 @@ export default function App() {
                 {alphabet.map((letter, index) => <button key={index} className="key" data-identifier="letter" disabled={gameState==="playing"?usedLetters.includes(index):true} onClick={event => guessCharacter(event,index)}>{letter}</button>)}
             </div>
             <div className="guess">
-                <label htmlFor="guess">Já sei a palavra</label>
+                <label htmlFor="guess">Já sei a palavra!</label>
                 <input type="text" name="guess" data-identifier="type-guess" value={wordInput} disabled={!(gameState==="playing")} onChange={(event)=>setWordInput(event.target.value)}></input>
                 <button data-identifier="guess-button" disabled={!(gameState==="playing")} onClick={() => guessWord(wordInput.split(""))}>Chutar</button>
             </div>
