@@ -23,6 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content:space-between;
+  align-items: flex-end;
   height: inherit;
 }
 
@@ -104,17 +105,17 @@ body {
 
 .playing{
   margin: 1px;
-  font-size: 30px;
+  font-size: 35px;
 }
 
 .won{
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
-  color:green;
+  color:#27ae60;
 }
 
 .defeated{
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
-  color:red;
+  color:#ff0000;
 }
