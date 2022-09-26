@@ -5,15 +5,16 @@ import palavras from "./palavras"
 export default function App() {
 
     const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    
 
 
+    const [usedLetters, setUsedLetters] = useState([])
     const [word, setWord] = useState([])
     const [wordGuess, setWordGuess] = useState([])
     const [wordInput, setWordInput] = useState([])
     const [hangmanState, setHangmanState] = useState(0)
     const [hangmanImage, setHangmanImage] = useState("assets/forca0.png")
-    const [gameState, setGameState] = useState("playing")
-    const [disabledState, setDisabled] = useState(true)
+    const [gameState, setGameState] = useState("waiting")
 
 
     function comparator() {
@@ -34,11 +35,11 @@ export default function App() {
         setHangmanState(0)
         setHangmanImage(`assets/forca0.png`)
         setGameState("playing")
-        setDisabled(false)
+        setUsedLetters([])
     }
 
-    function guessCharacter(event) {
-        event.currentTarget.disabled = true
+    function guessCharacter(event,index) {
+        setUsedLetters([...usedLetters,index])
         let character = event.target.textContent
         if (word.includes(character)) {
             const updatedGuessWord = word.map((c, index) => isEqual(c,character)?c:wordGuess[index])
@@ -100,12 +101,12 @@ export default function App() {
                 </div>
             </div>
             <div className="keyboard">
-                {alphabet.map((letter) => <button className="key" data-identifier="letter" disabled={disabledState} onClick={(event) => guessCharacter(event)}>{letter}</button>)}
+                {alphabet.map((letter, index) => <button key={index} className="key" data-identifier="letter" disabled={gameState==="playing"?usedLetters.includes(index):true} onClick={event => guessCharacter(event,index)}>{letter}</button>)}
             </div>
             <div className="guess">
                 <label htmlFor="guess">Já sei a palavra</label>
-                <input type="text" name="guess" data-identifier="type-guess" value={wordInput} onChange={(event)=>setWordInput(event.target.value)}></input>
-                <button data-identifier="guess-button" onClick={() => guessWord(wordInput.split(""))}>Chutar</button>
+                <input type="text" name="guess" data-identifier="type-guess" value={wordInput} disabled={!(gameState==="playing")} onChange={(event)=>setWordInput(event.target.value)}></input>
+                <button data-identifier="guess-button" disabled={!(gameState==="playing")} onClick={() => guessWord(wordInput.split(""))}>Chutar</button>
             </div>
         </div>
     )
