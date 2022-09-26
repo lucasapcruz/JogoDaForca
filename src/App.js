@@ -13,6 +13,7 @@ export default function App() {
     const [hangmanState, setHangmanState] = useState(0)
     const [hangmanImage, setHangmanImage] = useState("assets/forca0.png")
     const [gameState, setGameState] = useState("playing")
+    const [disabledState, setDisabled] = useState(true)
 
 
     function comparator() {
@@ -25,9 +26,20 @@ export default function App() {
         let underscoreWord = "_".repeat(palavras[0].length)
         console.log(palavras[0])
         setWordGuess(underscoreWord.split(""))
+        restartGame()
     }
 
-    function guessCharacter(character) {
+    function restartGame(){
+        setWordInput("")
+        setHangmanState(0)
+        setHangmanImage(`assets/forca0.png`)
+        setGameState("playing")
+        setDisabled(false)
+    }
+
+    function guessCharacter(event) {
+        event.currentTarget.disabled = true
+        let character = event.target.textContent
         if (word.includes(character)) {
             const updatedGuessWord = word.map((c, index) => isEqual(c,character)?c:wordGuess[index])
             setWordGuess(updatedGuessWord)
@@ -48,6 +60,7 @@ export default function App() {
     function guessWord(updatedGuessWord){
         if(!checkWin(updatedGuessWord)){
             setHangmanState(6)
+            setHangmanImage(`assets/forca6.png`)
             checkDefeat(6)
         }
         
@@ -87,7 +100,7 @@ export default function App() {
                 </div>
             </div>
             <div className="keyboard">
-                {alphabet.map((letter) => <button className="letter" data-identifier="letter" onClick={(event) => guessCharacter(event.target.textContent)}>{letter}</button>)}
+                {alphabet.map((letter) => <button className="key" data-identifier="letter" disabled={disabledState} onClick={(event) => guessCharacter(event)}>{letter}</button>)}
             </div>
             <div className="guess">
                 <label htmlFor="guess">Já sei a palavra</label>
